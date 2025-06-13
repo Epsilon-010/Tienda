@@ -1,4 +1,4 @@
-import imgprueba from "../assets/Ropahombre/imgprueba2.jpg";
+import imgprueba from "../assets/Ropahombre/imgprueba2.jpg"; // Asegúrate de que esta ruta sea correcta para tu imagen
 
 const productosM = [
   {

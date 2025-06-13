@@ -1,54 +1,26 @@
-import imgprueba from  "../assets/Ropahombre/imgprueba.jpg"
+// src/datos/ProductoHombre.js
+// Necesitas reemplazar 'imgprueba' con la ruta a tus propias imágenes de hombre
+import imgHombre1 from "../assets/Ropahombre/imgprueba.jpg"; // Cambia esta ruta
+import imgHombre2 from "../assets/Ropahombre/imgprueba2.jpg"; // Cambia esta ruta
 
-const productos = [
+const productosH = [
   {
-    id: 1,
-    nombre: "Camisa Casual",
-    descripcion: "Camisa de algodón cómoda para uso diario.",
-    precio: 450,
-    imagen: imgprueba,
+    id: 101, // Asegúrate de que los IDs no se repitan con los de mujer
+    nombre: "Camisa Casual Hombre",
+    descripcion: "Camisa de lino para un look relajado.",
+    precio: 550,
+    imagen: imgHombre1, // Usa tu imagen real
     talla: ""
   },
   {
-    id: 2,
-    nombre: "Pantalón Slim Fit",
-    descripcion: "Pantalón ajustado de tela elástica.",
-    precio: 620,
-    imagen: imgprueba,
+    id: 102,
+    nombre: "Pantalón Chino",
+    descripcion: "Pantalón cómodo y versátil para el día a día.",
+    precio: 700,
+    imagen: imgHombre2, // Usa tu imagen real
     talla: ""
   },
-  {
-    id: 3,
-    nombre: "Chaqueta de Mezclilla",
-    descripcion: "Chaqueta clásica de mezclilla azul.",
-    precio: 899,
-    imagen: imgprueba,
-    talla: ""
-  },
-  {
-    id: 4,
-    nombre: "Sudadera Oversize",
-    descripcion: "Sudadera amplia con diseño minimalista.",
-    precio: 520,
-    imagen: imgprueba,
-    talla: ""
-  },
-  {
-    id: 5,
-    nombre: "Zapatillas Urbanas",
-    descripcion: "Calzado casual para estilo urbano.",
-    precio: 799,
-    imagen: imgprueba,
-    talla: ""
-  },
-  {
-    id: 6,
-    nombre: "Camiseta Básica",
-    descripcion: "Camiseta de algodón 100% disponible en varios colores.",
-    precio: 199,
-    imagen: imgprueba,
-    talla: ""
-  }
+  // Añade más productos para hombre aquí
 ];
 
-export default productos;
+export default productosH;

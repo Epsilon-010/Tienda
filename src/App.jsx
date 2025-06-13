@@ -1,77 +1,73 @@
-import './App.css';
-import Menu from './components/Menu';
-import Opcioneshombre from './components/Opcioneshombre';
-import Opcionesmujer from './components/Opcionesmujer';
+// src/App.jsx
+import React, { useState } from 'react';
+import BarraNav from './components/BarraNav';
 import Carrito from './components/Carrito';
-import BarraNav from './components/BarraNav'; // Importa la BarraNav
-import { useState } from 'react';
+import Menu from './components/Menu'; // El componente que muestra la lista de productos
+import HomeSelection from './components/HomeSelection'; // El componente de selección inicial
+import Login from './components/Login'; // Si lo tienes
+
 import { CartProvider } from './contexts/CartContext';
+// import { AuthProvider } from './contexts/AuthContext'; // Si tienes un AuthContext real
 
-// Importa tus datos de productos
-import productosM from './datos/ProductoMujer';
-import productosH from './datos/ProductosHombre'; // Asegúrate de tener este archivo creado
+const App = () => {
+  const [currentPage, setCurrentPage] = useState('homeSelection'); 
+  const [authState, setAuthState] = useState(null); 
 
-function App() {
-  // Estado para controlar la página actual: 'menu', 'hombre', 'mujer', 'carrito'
-  const [currentPage, setCurrentPage] = useState("menu");
-
-  // Funciones para cambiar la página
-  const handleGoToMenu = () => {
-    setCurrentPage("menu");
+  const requestLoginModal = () => {
+    alert("Simulando modal de login. Para ver el carrito, cambia authState a 'logged'");
+    // setAuthState('logged'); 
   };
 
-  const handleGoToHombre = () => {
-    setCurrentPage("hombre");
+  const handleSelectCategoryFromHome = (category) => {
+    if (category === 'hombre') {
+      setCurrentPage('productsHombre');
+    } else if (category === 'mujer') {
+      setCurrentPage('productsMujer');
+    }
   };
 
-  const handleGoToMujer = () => {
-    setCurrentPage("mujer");
-  };
-
-  const handleGoToCart = () => {
-    setCurrentPage("carrito");
+  const handleGoBackToHomeSelection = () => {
+    setCurrentPage('homeSelection');
   };
 
   return (
+    // <AuthProvider> 
     <CartProvider>
-      <div className="min-h-screen flex flex-col">
-        {/* La BarraNav siempre será visible en la parte superior */}
-        <BarraNav onGoToCart={handleGoToCart} /> {/* Pasa la función para ir al carrito */}
+      {/* Cambiado: bg-gray-100 a bg-[#FDFFEA] para que coincida con HomeSelection y Menu */}
+      <div className="min-h-screen bg-[#FDFFEA]"> 
+        <BarraNav 
+          onGoToCart={() => setCurrentPage('cart')} 
+          onGoToHome={handleGoBackToHomeSelection} 
+        />
 
-        <main className="flex-grow"> {/* main para que el contenido ocupe el espacio restante */}
-          {/* Renderizado condicional de componentes según la página actual */}
-          {currentPage === "menu" && (
-            <Menu
-              opcion={currentPage}
-              menu={handleGoToMenu}
-              hombre={handleGoToHombre}
-              mujer={handleGoToMujer}
+        <main className="pt-16"> 
+          {currentPage === 'homeSelection' && (
+            <HomeSelection onSelectCategory={handleSelectCategoryFromHome} />
+          )}
+
+          {(currentPage === 'productsHombre' || currentPage === 'productsMujer') && (
+            <Menu 
+              category={currentPage === 'productsHombre' ? 'hombre' : 'mujer'} 
+              onGoBack={handleGoBackToHomeSelection} 
             />
           )}
 
-          {currentPage === "hombre" && (
-            <Opcioneshombre
-              opcion={currentPage}
-              menu={handleGoToMenu}
-              productos={productosH}
+          {currentPage === 'cart' && (
+            <Carrito 
+              onGoBackToMenu={handleGoBackToHomeSelection} 
+              authState={authState} 
+              requestLoginModal={requestLoginModal}
             />
           )}
 
-          {currentPage === "mujer" && (
-            <Opcionesmujer
-              menu={handleGoToMenu}
-              productos={productosM}
-            />
-          )}
-
-          {currentPage === "carrito" && (
-            // Renderiza el Carrito cuando la página actual sea 'carrito'
-            <Carrito onGoBackToMenu={handleGoToMenu} /> /* Pasa una función para volver al menú */
+          {currentPage === 'login' && (
+            <Login /> 
           )}
         </main>
       </div>
     </CartProvider>
+    // </AuthProvider>
   );
-}
+};
 
 export default App;

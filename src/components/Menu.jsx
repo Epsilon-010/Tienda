@@ -1,53 +1,62 @@
-import { useState, useEffect } from "react";
-import Hombre from "../assets/hombre2.jpg";
-import Mujer from "../assets/mujer.jpg";
-import BarraNav from "./BarraNav"; // Importamos la barra unificada
+// src/components/Menu.jsx
+import React, { useState } from 'react';
+import Articulo from './Articulo';
+import ProductDetailModal from './ProductDetailModal';
+import { useCart } from '../contexts/CartContext';
 
-const Menu = (props) => {
-  const [loading, setLoading] = useState(true);
+// Importa tus datos de productos
+import productosH from '../datos/ProductosHombre';
+import productosM from '../datos/ProductoMujer';
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
+// Este componente ahora recibe la categoría a mostrar y una función para volver.
+const Menu = ({ category, onGoBack }) => { 
+  const { addToCart } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const openProductDetails = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closeProductDetails = () => {
+    setSelectedProduct(null);
+  };
+
+  // Determina qué productos mostrar según la categoría recibida
+  const productsToDisplay = category === 'hombre' ? productosH : productosM;
+  const title = category === 'hombre' ? 'Colección Hombre' : 'Colección Mujer';
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FDFFEA] text-[#000102]">
-      {loading ? (
-        <div className="flex items-center justify-center flex-1">
-          <h1 className="text-6xl font-bold animate-pulse">HxM</h1>
-        </div>
+    <div className="container mx-auto p-6">
+      <button
+        onClick={onGoBack} // Botón para volver a la selección de categorías
+        className="mb-6 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-200"
+      >
+        &larr; Volver a Categorías
+      </button>
+
+      <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">{title}</h2>
+
+      {productsToDisplay.length === 0 ? (
+        <p className="text-center text-gray-600">No hay productos disponibles en esta categoría.</p>
       ) : (
-        <>
-          
-          <div className="flex-1 flex items-center justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-32 gap-x-32 px-16 py-12">
-              <div className="text-center">
-                <img
-                  src={Hombre}
-                  alt="Hombre"
-                  onClick={props.hombre}
-                  className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[400px] max-h-[300px] cursor-pointer"
-                />
-                <h2 className="text-2xl font-semibold mt-8">Hombre</h2>
-              </div>
-              <div className="text-center">
-                <img
-                  src={Mujer}
-                  alt="Mujer"
-                  onClick={props.mujer}
-                  className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[400px] max-h-[300px] cursor-pointer"
-                />
-                <h2 className="text-2xl font-semibold mt-8">Mujer</h2>
-              </div>
-            </div>
-          </div>
-        </>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          {productsToDisplay.map((product) => (
+            <Articulo
+              key={product.id}
+              product={product}
+              onAddToCart={addToCart}
+              onViewDetails={openProductDetails}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Renderiza el modal si hay un producto seleccionado */}
+      {selectedProduct && (
+        <ProductDetailModal product={selectedProduct} onClose={closeProductDetails} />
       )}
     </div>
   );
 };
 
 export default Menu;
-
-

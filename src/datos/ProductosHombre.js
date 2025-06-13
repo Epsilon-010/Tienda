@@ -1,4 +1,4 @@
-// src/datos/ProductoHombre.js
+// src/datos/ProductosHombre.js
 // Necesitas reemplazar 'imgprueba' con la ruta a tus propias imágenes de hombre
 import imgHombre1 from "../assets/Ropahombre/imgprueba.jpg"; // Cambia esta ruta
 import imgHombre2 from "../assets/Ropahombre/imgprueba2.jpg"; // Cambia esta ruta
@@ -10,7 +10,9 @@ const productosH = [
     descripcion: "Camisa de lino para un look relajado.",
     precio: 550,
     imagen: imgHombre1, // Usa tu imagen real
-    talla: ""
+    talla: "",
+    genero: "hombre", // ¡Añadido!
+    tipoPrenda: "camisa" // ¡Añadido!
   },
   {
     id: 102,
@@ -18,9 +20,11 @@ const productosH = [
     descripcion: "Pantalón cómodo y versátil para el día a día.",
     precio: 700,
     imagen: imgHombre2, // Usa tu imagen real
-    talla: ""
+    talla: "",
+    genero: "hombre", // ¡Añadido!
+    tipoPrenda: "pantalón" // ¡Añadido!
   },
-  // Añade más productos para hombre aquí
+  // Añade más productos para hombre aquí con sus respectivas propiedades
 ];
 
 export default productosH;

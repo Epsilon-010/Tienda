@@ -27,7 +27,7 @@ const Articulo = ({ id, imagen, nombre, descripcion, precio }) => {
           <span className="text-xl font-bold">${precio.toFixed(2)}</span> {/* Formatea el precio a 2 decimales */}
           <button
             onClick={handleAddToCart} // Asigna la función al evento click del botón
-            className="bg-[#000102] text-white text-sm px-4 py-2 rounded-md hover:bg-opacity-80 transition-colors duration-200" // Estilos de botón mejorados
+            className="bg-[#000102] text-white text-sm px-4 py-2 rounded-md hover:bg-black/60 transition-colors duration-200 cursor-pointer" // Estilos de botón mejorados
           >
             Añadir
           </button>

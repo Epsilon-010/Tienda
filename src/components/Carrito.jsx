@@ -10,7 +10,7 @@ const Carrito = ({ onGoBackToMenu }) => {
       {/* Botón para volver */}
       <button
         onClick={onGoBackToMenu}
-        className="mb-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-200"
+        className="mb-4 px-4 py-2 bg-gray-200 cursor-pointer text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-200"
       >
         &larr; Volver a la Tienda
       </button>
@@ -37,20 +37,20 @@ const Carrito = ({ onGoBackToMenu }) => {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => decrementQuantity(item.id)}
-                  className="bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-300 transition-colors duration-200"
+                  className="bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-300 transition-colors duration-200"
                 >
                   -
                 </button>
                 <span className="text-gray-800 font-medium">{item.quantity}</span>
                 <button
                   onClick={() => incrementQuantity(item.id)}
-                  className="bg-gray-200  text-gray-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-300 transition-colors duration-200"
+                  className="bg-gray-200  text-gray-700 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-300 transition-colors duration-200"
                 >
                   +
                 </button>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="ml-4 text-red-600 hover:text-red-800 transition-colors duration-200"
+                  className="ml-4 text-red-600 hover:text-red-800 transition-colors duration-200 cursor-pointer"
                 >
                   Eliminar
                 </button>
@@ -63,7 +63,7 @@ const Carrito = ({ onGoBackToMenu }) => {
             <span>${getTotalPrice().toFixed(2)}</span>
           </div>
 
-          <button className="mt-8 w-full bg-[#000102] text-white text-lg py-3 rounded-md hover:bg-opacity-80 transition-colors duration-200">
+          <button className="mt-8 w-full bg-[#000102] text-white text-lg py-3 rounded-md hover:bg-black/70 transition-colors duration-200 cursor-pointer">
             Proceder al Pago
           </button>
         </div>

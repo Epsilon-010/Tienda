@@ -7,7 +7,7 @@ const Opcionesmujer = ({ menu, productos }) => {
     <div className="p-6">
       <button 
         onClick={menu} 
-        className="px-6 py-2 bg-pink-600 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition-colors duration-200 mb-6"
+        className="px-6 py-2 bg-pink-600 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition-colors duration-200 mb-6 cursor-pointer"
       >
         Volver al Menú Principal
       </button>

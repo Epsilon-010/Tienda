@@ -15,7 +15,7 @@ const App = () => {
 
   const requestLoginModal = () => {
     alert("Simulando modal de login. Para ver el carrito, cambia authState a 'logged'");
-    // setAuthState('logged'); 
+    //setAuthState('logged'); 
   };
 
   const handleSelectCategoryFromHome = (category) => {

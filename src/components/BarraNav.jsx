@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import Login from "./Login";
+import Historial from "./Historial"
+import Pedidos from "../datos/Pedidos";
 
 const BarraNav = ({ onGoToCart }) => {
   const { getTotalItems } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [getListaPedidos,setListaPedidos] = useState(false);
 
+  
+  const openListaPedidos = () => setListaPedidos(!getListaPedidos);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -50,6 +55,12 @@ const BarraNav = ({ onGoToCart }) => {
               </span>
             )}
           </button>
+          <button
+            className="px-4 py-2 text-sm font-medium text-black rounded-xl shadow transition-all duration-200 "
+            onClick={openListaPedidos}
+          >
+            D
+          </button>
         </div>
       </nav>
 
@@ -57,6 +68,13 @@ const BarraNav = ({ onGoToCart }) => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         setIsLoggedIn={setIsLoggedIn}
+      />
+
+      <Historial 
+        getListaPedidos={getListaPedidos}
+        openListaPedidos={openListaPedidos}
+        pedidos={Pedidos}
+      
       />
     </>
   );

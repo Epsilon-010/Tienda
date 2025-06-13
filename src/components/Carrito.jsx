@@ -119,7 +119,7 @@ const Carrito = ({ onGoBackToMenu }) => {
 
           {/* Botón de proceder al pago */}
           <button className="mt-8 w-full bg-[#000102] text-white text-lg py-3 rounded-md hover:bg-opacity-80 transition-colors duration-200">
-            Proceder al Pago
+            Hacer un pedido y pagar
           </button>
         </div>
       )}

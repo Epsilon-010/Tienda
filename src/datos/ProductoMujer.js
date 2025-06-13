@@ -1,5 +1,12 @@
 // src/datos/ProductoMujer.js
 import imgprueba from "../assets/Ropahombre/imgprueba2.jpg"; // Asegúrate de que esta ruta sea correcta para tu imagen
+import palazzo from "../assets/ropa mujer/palazzo.jpeg";
+import botin from "../assets/ropa mujer/botin.jpeg";
+import chaqueta from "../assets/ropa mujer/chaqueta Crop.jpeg";
+import sudadera from "../assets/ropa mujer/sudpastel.jpeg";
+import top from "../assets/ropa mujer/top.jpeg";
+
+
 
 const productosM = [
   {
@@ -17,7 +24,7 @@ const productosM = [
     nombre: "Pantalón Palazzo",
     descripcion: "Pantalón ancho y cómodo para cualquier ocasión.",
     precio: 650,
-    imagen: imgprueba,
+    imagen: palazzo,
     talla: "",
     genero: "mujer", // ¡Añadido!
     tipoPrenda: "pantalón" // ¡Añadido!
@@ -27,7 +34,7 @@ const productosM = [
     nombre: "Chaqueta Crop",
     descripcion: "Chaqueta corta con diseño juvenil.",
     precio: 870,
-    imagen: imgprueba,
+    imagen: chaqueta,
     talla: "",
     genero: "mujer", // ¡Añadido!
     tipoPrenda: "chaqueta" // ¡Añadido!
@@ -37,7 +44,7 @@ const productosM = [
     nombre: "Sudadera Pastel",
     descripcion: "Sudadera con colores suaves y corte femenino.",
     precio: 540,
-    imagen: imgprueba,
+    imagen: sudadera,
     talla: "",
     genero: "mujer", // ¡Añadido!
     tipoPrenda: "sudadera" // ¡Añadido!
@@ -47,7 +54,7 @@ const productosM = [
     nombre: "Botines de Tacón",
     descripcion: "Botines elegantes para salidas nocturnas.",
     precio: 820,
-    imagen: imgprueba,
+    imagen: botin,
     talla: "",
     genero: "mujer", // ¡Añadido!
     tipoPrenda: "calzado" // ¡Añadido!
@@ -57,7 +64,7 @@ const productosM = [
     nombre: "Top Básico",
     descripcion: "Top sencillo ideal para el día a día.",
     precio: 210,
-    imagen: imgprueba,
+    imagen: top,
     talla: "",
     genero: "mujer", // ¡Añadido!
     tipoPrenda: "top" // ¡Añadido!

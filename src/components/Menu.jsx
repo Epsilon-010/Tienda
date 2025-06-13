@@ -10,6 +10,7 @@ const Menu = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para controlar si el usuario está logueado
 
   useEffect(() => {
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3000);
@@ -19,6 +20,8 @@ const Menu = (props) => {
   const openModal = () => setIsModalOpen(true); // Abrir modal
   const closeModal = () => setIsModalOpen(false); // Cerrar modal
 
+  return (
+    <div className="flex flex-col min-h-screen bg-[#FDFFEA] text-[#000102]">
   return (
     <div className="flex flex-col min-h-screen bg-[#FDFFEA] text-[#000102]">
       {loading ? (
@@ -56,7 +59,7 @@ const Menu = (props) => {
                   src={Hombre}
                   alt="Hombre"
                   onClick={props.hombre}
-                  className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[400px] max-h-[300px]"
+                  className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[400px] max-h-[300px] cursor-pointer"
                 />
                 <h2 className="text-2xl font-semibold mt-8">Hombre</h2>
               </div>
@@ -65,7 +68,7 @@ const Menu = (props) => {
                   src={Mujer}
                   alt="Mujer"
                   onClick={props.mujer}
-                  className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[400px] max-h-[300px]"
+                  className="rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300 max-w-[400px] max-h-[300px] cursor-pointer"
                 />
                 <h2 className="text-2xl font-semibold mt-8">Mujer</h2>
               </div>
@@ -76,5 +79,9 @@ const Menu = (props) => {
     </div>
   );
 };
+  );
+};
+
+export default Menu;
 
 export default Menu;

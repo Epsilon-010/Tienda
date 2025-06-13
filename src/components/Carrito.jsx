@@ -1,16 +1,45 @@
 import React from 'react';
 import { useCart } from '../contexts/CartContext';
 
-// Carrito ahora recibe una prop 'onGoBackToMenu' para volver al menú principal
 const Carrito = ({ onGoBackToMenu }) => {
-  const { cartItems, removeFromCart, incrementQuantity, decrementQuantity, getTotalPrice, getTotalItems } = useCart();
+  // Obtén el estado del carrito y las funciones necesarias del contexto
+  const { cartItems, removeFromCart, incrementQuantity, decrementQuantity, getTotalPrice, getTotalItems, authState, requestLoginModal } = useCart();
+
+  // ***** IMPORTANTE *****
+  // Si el usuario es 'guest' (invitado), este bloque se renderiza INSTEAD (en lugar de) del contenido normal del carrito.
+  // Asegúrate de que no estás en modo invitado si esperas ver los ítems del carrito y el total.
+  if (authState === "guest") {
+    return (
+      <div className="w-full max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg my-8 text-center">
+        <button
+          onClick={onGoBackToMenu}
+          className="mb-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-200"
+        >
+          &larr; Volver a la Tienda
+        </button>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Carrito de Compras</h2>
+        <p className="text-gray-600 mb-4">
+          Para ver o manipular el contenido de tu carrito, por favor{" "}
+          <button onClick={() => requestLoginModal()} className="text-blue-600 hover:underline font-semibold">
+            inicia sesión
+          </button>
+          .
+        </p>
+        <button
+          onClick={() => requestLoginModal()}
+          className="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+        >
+          Iniciar Sesión
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg my-8">
-      {/* Botón para volver */}
       <button
         onClick={onGoBackToMenu}
-        className="mb-4 px-4 py-2 bg-gray-200 cursor-pointer text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-200"
+        className="mb-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-200"
       >
         &larr; Volver a la Tienda
       </button>
@@ -37,20 +66,20 @@ const Carrito = ({ onGoBackToMenu }) => {
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => decrementQuantity(item.id)}
-                  className="bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-300 transition-colors duration-200"
+                  className="bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-300 transition-colors duration-200"
                 >
                   -
                 </button>
                 <span className="text-gray-800 font-medium">{item.quantity}</span>
                 <button
                   onClick={() => incrementQuantity(item.id)}
-                  className="bg-gray-200  text-gray-700 w-8 h-8 flex items-center justify-center rounded-full cursor-pointer hover:bg-gray-300 transition-colors duration-200"
+                  className="bg-gray-200  text-gray-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-300 transition-colors duration-200"
                 >
                   +
                 </button>
                 <button
                   onClick={() => removeFromCart(item.id)}
-                  className="ml-4 text-red-600 hover:text-red-800 transition-colors duration-200 cursor-pointer"
+                  className="ml-4 text-red-600 hover:text-red-800 transition-colors duration-200"
                 >
                   Eliminar
                 </button>
@@ -58,12 +87,13 @@ const Carrito = ({ onGoBackToMenu }) => {
             </div>
           ))}
 
+          {/* ESTE ES EL BLOQUE DONDE SE MUESTRA EL PRECIO TOTAL */}
           <div className="mt-6 flex justify-between items-center text-xl font-bold text-gray-900 border-t pt-4">
             <span>Total:</span>
             <span>${getTotalPrice().toFixed(2)}</span>
           </div>
 
-          <button className="mt-8 w-full bg-[#000102] text-white text-lg py-3 rounded-md hover:bg-black/70 transition-colors duration-200 cursor-pointer">
+          <button className="mt-8 w-full bg-[#000102] text-white text-lg py-3 rounded-md hover:bg-opacity-80 transition-colors duration-200">
             Proceder al Pago
           </button>
         </div>

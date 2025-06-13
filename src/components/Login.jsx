@@ -1,20 +1,24 @@
-// Login.jsx
 import { useState } from "react";
 
 const Login = ({ isModalOpen, closeModal, setIsLoggedIn }) => {
-  const [isLogin, setIsLogin] = useState(true); // Para controlar si estamos en la vista de login o registro
-  const [email, setEmail] = useState(""); // Estado para el correo
-  const [password, setPassword] = useState(""); // Estado para la contraseña
-  const [confirmPassword, setConfirmPassword] = useState(""); // Estado para confirmar contraseña (solo en registro)
-  const [error, setError] = useState(""); // Estado para manejar errores
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
 
-  const toggleForm = () => setIsLogin(!isLogin); // Cambiar entre login y registro
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+    setError("");
+    setSuccess("");
+    setLoading(false);
+  };
 
-  // Manejo de submit
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevenir que la página se recargue
+    e.preventDefault();
 
-    // Validación de campos
     if (!email || !password) {
       setError("Por favor, complete todos los campos.");
       return;
@@ -25,20 +29,38 @@ const Login = ({ isModalOpen, closeModal, setIsLoggedIn }) => {
       return;
     }
 
-    setError(""); // Limpiar error si todo está bien
+    setError("");
 
-    // Simulación de login exitoso
-    setIsLoggedIn(true); // Marcar al usuario como logueado
-    closeModal(); // Cerrar el modal
+    if (!isLogin) {
+      // Simulación de registro con carga
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        setSuccess("✅ Usuario registrado exitosamente");
+        setTimeout(() => {
+          // Reset y cambiar a login
+          setSuccess("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+          setIsLogin(true);
+        }, 2000);
+      }, 1500);
+    } else {
+      // Simulación de login
+      setIsLoggedIn(true);
+      closeModal();
+    }
   };
 
-  // Limpiar los campos cuando se cierra el modal
   const handleCloseModal = () => {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
-    setError(""); // Limpiar cualquier error
-    closeModal(); // Cerrar el modal
+    setError("");
+    setSuccess("");
+    setLoading(false);
+    closeModal();
   };
 
   return (
@@ -46,12 +68,11 @@ const Login = ({ isModalOpen, closeModal, setIsLoggedIn }) => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
           <div className="fixed">
-            <div className="bg-white p-6 rounded-lg w-96">
+            <div className="bg-white p-6 rounded-lg w-96 relative">
               <h2 className="text-2xl font-bold mb-4 text-center">
                 {isLogin ? "Iniciar sesión" : "Registrarse"}
               </h2>
 
-              {/* Mostrar el error si hay */}
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
               <form onSubmit={handleSubmit}>
@@ -66,6 +87,7 @@ const Login = ({ isModalOpen, closeModal, setIsLoggedIn }) => {
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     placeholder="Correo electrónico"
+                    disabled={loading}
                   />
                 </div>
                 <div className="mb-4">
@@ -79,46 +101,64 @@ const Login = ({ isModalOpen, closeModal, setIsLoggedIn }) => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                     placeholder="Contraseña"
+                    disabled={loading}
                   />
-                  {isLogin ? null : (
-                    <div className="mb-4 mt-4">
-                      <label
-                        htmlFor="confirmPassword"
-                        className="block text-sm font-medium"
-                      >
-                        Confirmar contraseña
-                      </label>
-                      <input
-                        type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                        placeholder="Confirma tu contraseña"
-                      />
-                    </div>
-                  )}
                 </div>
+
+                {!isLogin && (
+                  <div className="mb-4">
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium">
+                      Confirmar contraseña
+                    </label>
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      placeholder="Confirma tu contraseña"
+                      disabled={loading}
+                    />
+                  </div>
+                )}
+
                 <div className="flex flex-col items-center space-y-4">
                   <button
                     type="submit"
-                    className="bg-[#000102] text-white px-6 py-2 rounded-lg cursor-pointer hover:text-gray-300 transition"
+                    disabled={loading || success}
+                    className="bg-[#000102] text-white px-6 py-2 rounded-lg cursor-pointer hover:text-gray-300 transition disabled:opacity-50"
                   >
-                    {isLogin ? "Iniciar sesión" : "Registrarse"}
+                    {loading
+                      ? "Registrando..."
+                      : isLogin
+                      ? "Iniciar sesión"
+                      : "Registrarse"}
                   </button>
-                  <button
-                    type="button"
-                    onClick={toggleForm}
-                    className="text-blue-500 text-xs cursor-pointer hover:underline"
-                  >
-                    {isLogin
-                      ? "¿No tienes cuenta? Regístrate"
-                      : "¿Ya tienes cuenta? Inicia sesión"}
-                  </button>
+
+                  {!loading && !success && (
+                    <button
+                      type="button"
+                      onClick={toggleForm}
+                      className="text-blue-500 text-xs cursor-pointer hover:underline"
+                    >
+                      {isLogin
+                        ? "¿No tienes cuenta? Regístrate"
+                        : "¿Ya tienes cuenta? Inicia sesión"}
+                    </button>
+                  )}
+
+                  {/* ✅ Mensaje de éxito grande */}
+                  {success && (
+                    <p className="text-green-600 text-lg text-center font-semibold mt-2 animate-fade-in">
+                      {success}
+                    </p>
+                  )}
                 </div>
               </form>
+
+              {/* ❌ Botón cerrar modal */}
               <button
-                onClick={handleCloseModal} // Llamamos a la nueva función para cerrar el modal y limpiar los campos
+                onClick={handleCloseModal}
                 className="absolute top-3 right-3 text-black bg-gray-200 rounded-full p-0.5 hover:bg-gray-300 transition cursor-pointer"
               >
                 <svg
@@ -145,4 +185,3 @@ const Login = ({ isModalOpen, closeModal, setIsLoggedIn }) => {
 };
 
 export default Login;
-
